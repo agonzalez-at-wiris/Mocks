@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearningLemur • Organization</title>
+  <style>
+    :root{
+      --teal:#1b6c71; --mint:#dff0ed; --card:#ffffff; --ink:#263238; --muted:#6b7c85; --line:#e7eef0;
+      --radius:14px; --shadow:0 6px 18px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--mint);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial}
+    .app{min-height:100svh}
+    header{height:56px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+    .brand{font-weight:800;letter-spacing:.2px}
+    .header-cta{display:flex;gap:12px;align-items:center}
+    .btn-pill{background:#fff;color:var(--teal);border:none;padding:10px 16px;border-radius:999px;font-weight:600;cursor:pointer}
+    .avatar{width:32px;height:32px;border-radius:50%;background:#e5f2f1;color:var(--teal);display:grid;place-items:center;font-weight:700}
+    .layout{display:grid;grid-template-columns:72px 1fr}
+    .rail{background:var(--mint);padding:14px 10px;border-right:1px solid rgba(0,0,0,.04)}
+    .rail a{display:flex;align-items:center;justify-content:center;padding:12px;border-radius:999px;margin:10px 6px;font-weight:700}
+    .rail a.active{background:var(--teal);color:#fff}
+    .rail a.inactive{background:transparent;color:var(--teal);border:2px solid var(--teal)}
+    main{padding:24px}
+    h1{margin:0 0 8px 6px;font-size:28px;font-weight:800;color:#183f42}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+    .card.h{padding:18px 20px}
+    .org-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .org-name{display:flex;align-items:center;gap:10px}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#e7f6f5;color:var(--teal);border:1px solid #cdebe8;font-weight:700;font-size:12px}
+    .grid{display:grid;gap:12px}
+    @media(min-width:960px){.grid.cols-3{grid-template-columns:1fr 1fr 1fr}}
+    .kpi{display:flex;align-items:center;justify-content:space-between}
+    .kpi .label{color:var(--muted);font-size:13px}
+    .kpi strong{font-size:20px}
+    .tabs{display:flex;gap:20px;border-bottom:2px solid var(--line);margin-top:12px}
+    .tab{padding:10px 4px;margin-bottom:-2px;border-bottom:2px solid transparent;cursor:pointer;color:#3a4b52}
+    .tab.active{border-color:var(--teal);font-weight:700}
+    table{width:100%;border-collapse:separate;border-spacing:0 10px;margin-top:8px}
+    th{color:var(--muted);text-align:left;font-weight:700}
+    td,th{padding:12px 14px}
+    tbody tr{background:#fff;border:1px solid var(--line)}
+    tbody tr td:first-child{border-top-left-radius:10px;border-bottom-left-radius:10px}
+    tbody tr td:last-child{border-top-right-radius:10px;border-bottom-right-radius:10px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);cursor:pointer;font-weight:700}
+    .btn.solid{background:var(--teal);color:#fff}
+    input,select{padding:10px 12px;border-radius:999px;border:1px solid var(--line);background:#fff}
+    .right{margin-left:auto}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;place-items:center}
+    .modal .content{background:#fff;padding:20px;border-radius:16px;min-width:320px;max-width:520px;border:1px solid var(--line)}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">LearningLemur</div>
+      <div class="header-cta">
+        <button class="btn-pill">UPGRADE YOUR PLAN</button>
+        <div class="avatar">AG</div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="rail">
+        <a class="inactive" href="#">📋</a>
+        <a class="inactive" href="#">📚</a>
+        <a class="active" href="#">🏫</a>
+      </aside>
+
+      <main>
+        <h1>Organization</h1>
+
+        <div class="card h">
+          <div class="org-head">
+            <div class="org-name">
+              <h2 style="margin:0">Wiris School</h2>
+              <span class="badge">Licensed</span>
+            </div>
+            <div>
+              <button class="btn" onclick="openInvite()">Invite members</button>
+              <button class="btn solid" onclick="openEdit()">Org settings</button>
+            </div>
+          </div>
+
+          <div class="grid cols-3" style="margin-top:10px">
+            <div class="card h kpi"><div><div class="label">Active teachers (30d)</div><strong>42</strong></div><span class="badge">+6.1% MoM</span></div>
+            <div class="card h kpi"><div><div class="label">Active students (30d)</div><strong>1,128</strong></div><span class="badge">+3.4% MoM</span></div>
+            <div class="card h kpi"><div><div class="label">Assignments created</div><strong>387</strong></div><span class="badge">Last 30 days</span></div>
+          </div>
+
+          <div class="tabs">
+            <div class="tab active" onclick="showTab('members')">Members</div>
+            <div class="tab" onclick="showTab('invites')">Invitations</div>
+            <div class="tab" onclick="showTab('overview')">Overview</div>
+            <div class="tab" onclick="showTab('billing')">Billing</div>
+          </div>
+        </div>
+
+        <!-- MEMBERS -->
+        <section id="tab-members" class="card h" style="margin-top:14px">
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:4px">
+            <h3 style="margin:0">Members</h3>
+            <div class="right" style="display:flex;gap:10px">
+              <input id="search" placeholder="Search name or email" style="width:260px" oninput="filterTable()" />
+              <select id="roleFilter" onchange="filterTable()"><option value="">All roles</option><option>Admin</option><option>Teacher</option><option>Student</option></select>
+            </div>
+          </div>
+          <table id="members">
+            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Classes</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>Carlota</td><td>carlota@wiris.com</td><td>Admin</td><td>—</td><td>Active</td><td><button class="btn">Manage</button></td></tr>
+              <tr><td>Pol</td><td>pol@wiris.com</td><td>Teacher</td><td>Algebra I, Geometry</td><td>Active</td><td><button class="btn">Manage</button></td></tr>
+              <tr><td>Guillem</td><td>guillem@wiris.com</td><td>Teacher</td><td>Calculus</td><td>Pending SSO</td><td><button class="btn">Resend</button></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- INVITATIONS TAB -->
+        <section id="tab-invites" class="card h" style="display:none;margin-top:14px">
+          <div style="display:flex;align-items:center;margin-bottom:6px">
+            <h3 style="margin:0">Invitations</h3>
+            <div class="right"><button class="btn solid" onclick="openInvite()">New invite</button></div>
+          </div>
+          <table>
+            <thead><tr><th>Email</th><th>Role</th><th>Expires</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>newteacher@wiris.com</td><td>Teacher</td><td>Oct 3</td><td>Sent</td><td><button class="btn">Revoke</button></td></tr>
+              <tr><td>admin@wiris.com</td><td>Admin</td><td>Oct 10</td><td>Sent</td><td><button class="btn">Revoke</button></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- OVERVIEW TAB -->
+        <section id="tab-overview" class="card h" style="display:none;margin-top:14px">
+          <h3 style="margin:6px 0 10px">Overview</h3>
+          <div class="grid cols-3" style="margin-top:10px">
+            <div class="card h"><div class="label">License</div><div style="display:flex;align-items:center;gap:8px"><strong>Organization plan</strong><span class="badge">Active</span></div><div class="label">Renewal: 30 Jun 2027</div></div>
+            <div class="card h"><div class="label">Integrations</div><ul style="margin:6px 0 0 18px">
+              <li>Google Classroom Add‑on (enabled)</li>
+              <li>Canvas LTI 1.3 (pilot)</li>
+              <li>SIS Sync (planned)</li>
+            </ul></div>
+            <div class="card h"><div class="label">Privacy</div><ul style="margin:6px 0 0 18px">
+              <li>Data region: EU</li>
+              <li>DPA signed</li>
+              <li>Student data minimization</li>
+            </ul></div>
+          </div>
+        </section>
+
+        <!-- BILLING TAB -->
+        <section id="tab-billing" class="card h" style="display:none;margin-top:14px">
+          <h3 style="margin:6px 0 10px">Billing</h3>
+          <div class="grid cols-3" style="margin-top:10px">
+            <div class="card h"><div class="label">Seats</div><div style="display:flex;align-items:center;gap:8px"><strong>50 / 60 teachers</strong><span class="badge">83% used</span></div><div class="label">Students unlimited</div></div>
+            <div class="card h"><div class="label">Plan</div><div>Organization (annual)</div><div class="label">Next invoice: 30 Jun 2027</div></div>
+            <div class="card h" style="display:flex;align-items:center;gap:10px;justify-content:center"><button class="btn solid">Request additional seats</button><button class="btn">Contact sales</button></div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Invite Modal -->
+  <div id="inviteModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="inviteTitle">
+    <div class="content">
+      <h3 id="inviteTitle" style="margin-top:0">Invite members</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:220px"><label style="display:block;margin-bottom:6px;color:var(--muted)">Email(s)</label><input id="inviteEmails" placeholder="name@wiris.com" /></div>
+        <div style="flex:1;min-width:160px"><label style="display:block;margin-bottom:6px;color:var(--muted)">Role</label><select id="inviteRole"><option>Teacher</option><option>Student</option><option>Admin</option></select></div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px"><button class="btn" onclick="closeInvite()">Cancel</button><button class="btn solid" onclick="sendInvite()">Send invites</button></div>
+    </div>
+  </div>
+
+  <!-- Edit Org Modal -->
+  <div id="editModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="editTitle">
+    <div class="content">
+      <h3 id="editTitle" style="margin-top:0">Organization settings</h3>
+      <label style="display:block;margin-bottom:6px;color:var(--muted)">Organization name</label>
+      <input value="Wiris School" />
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px"><button class="btn" onclick="closeEdit()">Close</button><button class="btn solid" onclick="saveEdit()">Save</button></div>
+    </div>
+  </div>
+
+  <script>
+    function showTab(name){
+      const tabs = ['members','invites','overview','billing'];
+      tabs.forEach(t=>{
+        const el=document.getElementById('tab-'+t);
+        if(el) el.style.display = (t===name)?'block':'none';
+      });
+      document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+      const idx = tabs.indexOf(name);
+      if(idx>-1) document.querySelectorAll('.tab')[idx].classList.add('active');
+    }
+    function openInvite(){document.getElementById('inviteModal').style.display='grid'}
+    function closeInvite(){document.getElementById('inviteModal').style.display='none'}
+    function sendInvite(){closeInvite()}
+    function openEdit(){document.getElementById('editModal').style.display='grid'}
+    function closeEdit(){document.getElementById('editModal').style.display='none'}
+    function saveEdit(){closeEdit()}
+    function filterTable(){
+      const q = document.getElementById('search').value.toLowerCase();
+      const role = document.getElementById('roleFilter').value;
+      document.querySelectorAll('#members tbody tr').forEach(tr=>{
+        const text = tr.textContent.toLowerCase();
+        const roleText = tr.children[2].textContent.trim();
+        const matchRole = !role || roleText===role;
+        const matchText = !q || text.includes(q);
+        tr.style.display = (matchRole && matchText)?'':'none';
+      })
+    }
+  </script>
+</body>
+</html>
